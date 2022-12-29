@@ -3,13 +3,6 @@ package execution_engine;
 import java.util.HashMap;
 import java.util.Map;
 
-import vm.AbstractExecutor;
-import vm.ConstantValuesTable;
-import vm.Disassembler;
-import vm.ExecutorChain;
-import vm.OutputLogger;
-import vm.VM;
-
 public class VM {
 
 	public static int[] mainExecutionBlock;
@@ -30,8 +23,8 @@ public class VM {
 		VM.ip = entryPoint;
 
 		VM.mainExecutionBlock = mainExecutionBlock;
-		VM.globalStorage = new int[ConstantValuesTable.DEFAULT_GLOBAL_STORAGE_SIZE];
-		VM.stack = new int[ConstantValuesTable.DEFAULT_STACK_SIZE];
+		VM.globalStorage = new int[ConstantsTable.DEFAULT_GLOBAL_STORAGE_SIZE];
+		VM.stack = new int[ConstantsTable.DEFAULT_STACK_SIZE];
 
 		this.executorChain = new ExecutorChain();
 		this.headExecutor = executorChain.getHeadExecutor();
