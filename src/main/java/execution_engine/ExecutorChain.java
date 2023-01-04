@@ -71,6 +71,12 @@ public class ExecutorChain {
 		AbstractExecutor gstore = new GSTORE();
 		registerExecutor(gstore);
 
+		AbstractExecutor vstore = new VSTORE();
+		registerExecutor(vstore);
+
+		AbstractExecutor vload = new VLOAD();
+		registerExecutor(vload);
+
 		AbstractExecutor ass = new ASS();
 		registerExecutor(ass);
 
@@ -119,10 +125,10 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				int firstOperand = VM.pop();
-				int secondOperand = VM.pop();
-				VM.push(firstOperand + secondOperand);
-				return;
+				int secondOperand = ChainedVM.pop();
+				int firstOperand = ChainedVM.pop();
+				ChainedVM.push(firstOperand + secondOperand);
+
 			} else {
 				callNext(instruction);
 			}
@@ -192,9 +198,9 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				int firstOperand = VM.pop();
-				int secondOperand = VM.pop();
-				VM.push(firstOperand * secondOperand);
+				int firstOperand = ChainedVM.pop();
+				int secondOperand = ChainedVM.pop();
+				ChainedVM.push(firstOperand * secondOperand);
 			} else {
 				callNext(instruction);
 			}
@@ -229,10 +235,10 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				int firstOperand = VM.pop();
-				int secondOperand = VM.pop();
+				int firstOperand = ChainedVM.pop();
+				int secondOperand = ChainedVM.pop();
 
-				VM.push(secondOperand / firstOperand);
+				ChainedVM.push(secondOperand / firstOperand);
 			} else {
 				callNext(instruction);
 			}
@@ -582,7 +588,9 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				VM.stack[++VM.sp] = VM.mainExecutionBlock[VM.ip++];
+				int value = ChainedVM.instructions[ChainedVM.ip++];
+				ChainedVM.push(value);
+
 			} else {
 				callNext(instruction);
 			}
@@ -617,8 +625,8 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				int value = VM.localVariablesMap.get(VM.mainExecutionBlock[VM.ip]);
-				VM.push(value);
+				int value = ChainedVM.localVariablesTable.get(ChainedVM.instructions[ChainedVM.ip]);
+				ChainedVM.push(value);
 			} else {
 				callNext(instruction);
 			}
@@ -688,7 +696,7 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				VM.push(VM.mainExecutionBlock[VM.ip]);
+				ChainedVM.push(ChainedVM.instructions[ChainedVM.ip]);
 				return;
 			} else {
 				callNext(instruction);
@@ -759,8 +767,10 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				int value = VM.pop();
-				VM.localVariablesMap.put(VM.pop(), value);
+				int value = ChainedVM.pop();
+				int storageIndex = ChainedVM.pop();
+				ChainedVM.localStorage[storageIndex] = value;
+				
 			} else {
 				callNext(instruction);
 			}
@@ -795,13 +805,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				if (!VM.localVariablesMap.containsKey(VM.mainExecutionBlock[VM.ip])) {
-					VM.localVariablesMap.put(VM.mainExecutionBlock[VM.ip], null);
-					VM.push(VM.mainExecutionBlock[VM.ip]);
-				} else {
-					int value = VM.localVariablesMap.get(VM.mainExecutionBlock[VM.ip]);
-					VM.push(value);
-				}
 			} else {
 				callNext(instruction);
 			}
@@ -908,6 +911,7 @@ public class ExecutorChain {
 
 				System.out.println("Process terminated.");
 				return;
+				
 			} else {
 
 				System.out.println("Unknown instruction");
@@ -979,6 +983,85 @@ public class ExecutorChain {
 			if (checkInstruction(instruction)) {
 
 				System.out.println("NOT IMPLEMENTED " + opcode);
+			} else {
+				callNext(instruction);
+			}
+		}
+
+		@Override
+		public void callNext(int instruction) {
+
+			nextExecutor.execute(instruction);
+		}
+
+		@Override
+		public void setNext(AbstractExecutor executor) {
+
+			nextExecutor = executor;
+		}
+	}
+
+	private class VSTORE extends AbstractExecutor {
+
+		private static final int opcode = Bytecodes.VSTORE;
+		private static AbstractExecutor nextExecutor;
+
+		@Override
+		public boolean checkInstruction(int instruction) {
+
+			return opcode == instruction;
+		}
+
+		@Override
+		public void execute(int instruction) {
+
+			if (checkInstruction(instruction)) {
+
+				int variableId = ChainedVM.instructions[ChainedVM.ip++];
+				if (!ChainedVM.localVariablesTable.containsKey(variableId)) {
+					ChainedVM.localVariablesTable.put(variableId, ChainedVM.nextAvailableIndex++);
+				}
+
+				ChainedVM.push(ChainedVM.localVariablesTable.get(variableId));
+
+			} else {
+				callNext(instruction);
+			}
+		}
+
+		@Override
+		public void callNext(int instruction) {
+
+			nextExecutor.execute(instruction);
+		}
+
+		@Override
+		public void setNext(AbstractExecutor executor) {
+
+			nextExecutor = executor;
+		}
+	}
+
+	private class VLOAD extends AbstractExecutor {
+
+		private static final int opcode = Bytecodes.VLOAD;
+		private static AbstractExecutor nextExecutor;
+
+		@Override
+		public boolean checkInstruction(int instruction) {
+
+			return opcode == instruction;
+		}
+
+		@Override
+		public void execute(int instruction) {
+
+			if (checkInstruction(instruction)) {
+
+				int variableId = ChainedVM.instructions[ChainedVM.ip++];
+				int index = ChainedVM.localVariablesTable.get(variableId);
+				ChainedVM.push(ChainedVM.localStorage[index]);
+
 			} else {
 				callNext(instruction);
 			}
