@@ -1,4 +1,11 @@
 /home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/package-info.java
-/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/VM.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/ConstantsTable.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/ConsoleOutputExporter.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/TextExporter.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/StandardVM.java
 /home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/Bytecodes.java
 /home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/Runner.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/AbstractExecutor.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/ChainedVM.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/ExecutorChain.java
+/home/peter/eclipse-workspace/execution_engine/src/main/java/execution_engine/BytecodeImporter.java
