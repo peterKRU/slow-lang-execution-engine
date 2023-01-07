@@ -3,8 +3,8 @@ package execution_engine;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ConsoleOutputExporter implements TextExporter {
-
+public class LogExporter implements TextExporter{
+	
 	@Override
 	public void export(String output, String fileName) throws IOException {
 
@@ -16,7 +16,7 @@ public class ConsoleOutputExporter implements TextExporter {
 			
 		} catch (IOException e) {
 			
-			System.out.println("ConsoleOutputExporter: An error occurred while writing to the file.");
+			System.out.println("LogExporter: An error occurred while writing to the file.");
 			e.printStackTrace();
 		}
 	}
