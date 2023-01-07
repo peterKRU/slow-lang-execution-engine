@@ -6,7 +6,7 @@ public class Runner {
 
 	public static void main(String[] args) throws IOException {
 		
-		int[] compiledCode = BytecodeImporter.importBytecode("compiledTest");
+		int[] compiledCode = BytecodeImporter.importBytecode("test_compiled.txt");
 		
 		ChainedVM chainedVM = new ChainedVM(compiledCode, 0);
 		chainedVM.executeProgram();
