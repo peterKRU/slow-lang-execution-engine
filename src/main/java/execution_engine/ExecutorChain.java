@@ -873,8 +873,12 @@ public class ExecutorChain {
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-
-				System.out.println("NOT IMPLEMENTED " + opcode);
+				
+				Integer integerValue = ChainedVM.pop();
+				String stringValue = integerValue.toString();
+				System.out.println(stringValue);
+				ChainedVM.logger.log(stringValue);
+				
 			} else {
 				callNext(instruction);
 			}
