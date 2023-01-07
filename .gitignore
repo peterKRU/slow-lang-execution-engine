@@ -1,0 +1,5 @@
+# Generated files
+target/
+
+# Java class files
+*.class
