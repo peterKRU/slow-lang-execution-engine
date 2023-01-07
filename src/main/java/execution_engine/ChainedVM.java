@@ -20,7 +20,9 @@ public class ChainedVM {
 
 	private AbstractExecutor headExecutor;
 	private ExecutorChain executorChain;
-
+	
+	private Logger logger;
+	
 	public ChainedVM(int[] instructions, int entryPoint) {
 
 		ChainedVM.ip = entryPoint;
@@ -33,6 +35,8 @@ public class ChainedVM {
 
 		this.executorChain = new ExecutorChain();
 		this.headExecutor = executorChain.getHeadExecutor();
+		
+		this.logger = new Logger();
 	}
 
 	public void executeProgram() {
