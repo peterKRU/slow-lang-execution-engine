@@ -10,6 +10,9 @@ public class Runner {
 		
 		ChainedVM chainedVM = new ChainedVM(compiledCode, 0);
 		chainedVM.executeProgram();
+		
+		Logger logger = chainedVM.getLogger();
+		logger.exportLog("log.txt");
 	}
 
 }

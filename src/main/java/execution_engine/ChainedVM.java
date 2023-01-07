@@ -64,5 +64,9 @@ public class ChainedVM {
 
 		return stack[sp];
 	}
-
+	
+	public Logger getLogger() {
+		
+		return logger;
+	}
 }
