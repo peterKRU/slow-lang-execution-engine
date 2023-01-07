@@ -21,7 +21,7 @@ public class ChainedVM {
 	private AbstractExecutor headExecutor;
 	private ExecutorChain executorChain;
 	
-	private Logger logger;
+	public static Logger logger;
 	
 	public ChainedVM(int[] instructions, int entryPoint) {
 
@@ -64,9 +64,5 @@ public class ChainedVM {
 
 		return stack[sp];
 	}
-	
-	public Logger getLogger() {
-		
-		return logger;
-	}
+
 }
