@@ -20,6 +20,11 @@ public class Logger {
 		log.add(text);
 	}
 	
+	public List<String> getLog(){
+		
+		return log;
+	}
+	
 	public void exportLog(String fileName) throws IOException {
 		
 		String lines = "";
