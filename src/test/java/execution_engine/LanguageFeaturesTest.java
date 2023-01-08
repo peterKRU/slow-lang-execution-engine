@@ -44,8 +44,8 @@ class LanguageFeaturesTest {
  		assumeTrue(log.size() == 3);
  		
  		Integer var1 = ResourceReader.readInteger(log.get(0));
- 		Integer var2 = ResourceReader.readInteger(log.get(0));
- 		Integer var3 = ResourceReader.readInteger(log.get(0));
+ 		Integer var2 = ResourceReader.readInteger(log.get(1));
+ 		Integer var3 = ResourceReader.readInteger(log.get(2));
  		
  		assertTrue(var1 == 1);
  		assertTrue(var2 == 2);
