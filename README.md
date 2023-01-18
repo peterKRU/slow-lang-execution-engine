@@ -9,7 +9,7 @@ and features.
 
 It can also be used an a general-purpose language for developing applications, although there is no good reason for using it as such. SlowLang's name reflects its emphasis on ease of maintenance and extensibility over execution speed. 
 
-Some key haracteristics:
+Some key characteristics:
 - Simplified C-like syntax
 - Separate front-end compiler
 - Custom Bytecode compilation
