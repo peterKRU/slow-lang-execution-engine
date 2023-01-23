@@ -496,20 +496,59 @@ unit PolygonShape {
 ***
 
 ## Getting Started
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
 
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ### Installation
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
+
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ### Run Example Program
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
+
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ### Online Compiler
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
+
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ### Configurations
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
+
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ## Architecture & Design
 
@@ -528,6 +567,9 @@ This section contains detailed analysis of the project architecture and design. 
 ***
 
 ### System Architecture
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
 
 [placeholder segment]
 
@@ -554,6 +596,9 @@ This diagram represents [what the diagram represents]. The main classes in this 
 
 ### Compiler Architecture
 
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
 [placeholder segment]
 
 The class diagrams for this project are designed to represent the main components and their relationships. The diagrams illustrate the classes, interfaces, and their attributes and methods. 
@@ -578,13 +623,37 @@ This diagram represents [what the diagram represents]. The main classes in this 
 ***
 
 ### Language Design
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
+
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ### Design Decisions
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
+
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ## Language Specification
-![alt text](https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction")
+
+![under-construction]
+
+> **Warning**
+> This section of the document is currently under construction and may contain placeholders and/or incomplete information. 
+
+##### [Back to top](#table-of-contents)
+
+***
 
 ### Grammar Overview
 
@@ -847,6 +916,7 @@ This section contains definitions of domain-specific terms used within the docum
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [slowlang-logo]: https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/SlowLang_2.jpg "SlowLang Logo"
+
 [under-construction]: https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/master/docs/Under-Construction-300x222.png "Under Construction"
 
 [architecture-diagram]: https://raw.githubusercontent.com/peterKRU/slow-lang-compiler/b89ee32aa676a197d01b2c80acb5f868df44373e/docs/architecture_overview.jpg
