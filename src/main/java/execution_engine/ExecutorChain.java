@@ -163,7 +163,10 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
+				int secondOperand = ChainedVM.pop();
+				int firstOperand = ChainedVM.pop();
+				ChainedVM.push(firstOperand - secondOperand);
+				
 			} else {
 				callNext(instruction);
 			}
@@ -273,7 +276,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -308,7 +310,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -343,7 +344,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -412,7 +412,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -447,7 +446,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -482,7 +480,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -517,7 +514,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -552,7 +548,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -660,7 +655,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -731,7 +725,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -838,7 +831,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
@@ -875,7 +867,7 @@ public class ExecutorChain {
 				
 				Integer integerValue = ChainedVM.pop();
 				String stringValue = integerValue.toString();
-				System.out.println(stringValue);
+				System.out.println("OUTPUT: " + stringValue);
 				ChainedVM.logger.log(stringValue);
 				
 			} else {
@@ -911,13 +903,16 @@ public class ExecutorChain {
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-
-				System.out.println("Process terminated.");
+				
+				ChainedVM.ip = ChainedVM.instructions.length;
+				
+				System.out.println("HAAAALT");
+				
 				return;
 				
 			} else {
-
-				System.out.println("Unknown instruction");
+				
+				return;
 			}
 		}
 
@@ -944,13 +939,44 @@ public class ExecutorChain {
 
 			return opcode == instruction;
 		}
-
+		
 		@Override
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-
-				System.out.println("NOT IMPLEMENTED " + opcode);
+				
+				int funcId = ChainedVM.instructions[ChainedVM.ip++];
+				int funcAddr = ChainedVM.getFunc(funcId);
+				
+				System.out.println("ADDDR: " + funcAddr);
+				
+				int numArgs = ChainedVM.instructions[funcAddr++];
+				
+				System.out.println("OLOLO" + numArgs);
+				
+				
+				for(int i = 0; i < numArgs; i++) {
+					
+					int variableId = ChainedVM.instructions[funcAddr++];
+					System.out.println("VARID: " + variableId);
+					
+					ChainedVM.localVariablesTable.put(variableId, ChainedVM.nextAvailableIndex++);
+					
+					int value = ChainedVM.pop();
+					int storageIndex = ChainedVM.localVariablesTable.get(variableId);
+					ChainedVM.localStorage[storageIndex] = value;
+				}
+				
+				System.out.println("FP: " + ChainedVM.fp + " IP " + ChainedVM.ip);
+				
+				ChainedVM.push(ChainedVM.fp);
+				ChainedVM.push(ChainedVM.ip);
+				ChainedVM.fp = ChainedVM.sp;
+				ChainedVM.ip = funcAddr;
+				
+				System.out.println("INSTRUCTION: " + ChainedVM.instructions[ChainedVM.ip]);
+				
+				
 			} else {
 				callNext(instruction);
 			}
@@ -984,8 +1010,20 @@ public class ExecutorChain {
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-
-				System.out.println("NOT IMPLEMENTED " + opcode);
+				
+				int returnValue = ChainedVM.pop();
+				System.out.println("RET VALUE: " + returnValue);
+				System.out.println("SP VALUE: " + ChainedVM.sp);
+				System.out.println("FRAME POINTER: " + ChainedVM.fp);
+				System.out.println("I POINTER: " + ChainedVM.ip);
+				ChainedVM.sp = ChainedVM.fp;
+				
+				ChainedVM.ip = ChainedVM.pop();
+				ChainedVM.fp = ChainedVM.pop();
+				
+				ChainedVM.push(returnValue);
+				
+				
 			} else {
 				callNext(instruction);
 			}
@@ -1024,7 +1062,9 @@ public class ExecutorChain {
 				if (!ChainedVM.localVariablesTable.containsKey(variableId)) {
 					ChainedVM.localVariablesTable.put(variableId, ChainedVM.nextAvailableIndex++);
 				}
-
+				
+				System.out.println("STORED AT: " + ChainedVM.localVariablesTable.get(variableId));
+				
 				ChainedVM.push(ChainedVM.localVariablesTable.get(variableId));
 
 			} else {

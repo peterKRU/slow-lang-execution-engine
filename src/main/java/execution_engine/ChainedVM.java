@@ -17,11 +17,13 @@ public class ChainedVM {
 	public static int ip;
 	public static int fp;
 	public static int sp = -1;
-
+	
 	private AbstractExecutor headExecutor;
 	private ExecutorChain executorChain;
 	
 	public static Logger logger;
+	
+	public static HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
 	
 	public ChainedVM(int[] instructions, int entryPoint) {
 
@@ -37,15 +39,35 @@ public class ChainedVM {
 		this.headExecutor = executorChain.getHeadExecutor();
 		
 		this.logger = new Logger();
+		
+		testMap.put(5555, 13);
 	}
-
+	
+	public static Integer getFunc(Integer funcId) {
+		
+		return testMap.get(funcId);
+	}
+	
 	public void executeProgram() {
 
 		while (ip < instructions.length) {
 
 			int instruction = instructions[ip];
 			ip++;
-
+			
+			System.out.println("CURRENT INSTRUCTION: " + instruction + " IP: " + ip);
+			System.out.println("STACK POINTER: " + sp);
+			System.out.println();
+			
+			System.out.println("STORAGE SIZE: " + localVariablesTable);
+			
+			for(int value : stack) {
+				
+				System.out.print(value + " ");
+			}
+			
+			System.out.println();
+			
 			headExecutor.execute(instruction);
 		}
 	}
