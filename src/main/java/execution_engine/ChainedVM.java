@@ -3,7 +3,7 @@ package execution_engine;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChainedVM {
+public class ChainedVM implements InstructionsLoader, HeapCache {
 
 	public static int[] instructions;
 	public static int[] stack;
@@ -17,16 +17,16 @@ public class ChainedVM {
 	public static int ip;
 	public static int fp;
 	public static int sp = -1;
-	
+
 	private AbstractExecutor headExecutor;
 	private ExecutorChain executorChain;
-	
+
 	public static Logger logger;
-	
+
 	private MemoryManager memoryManager;
-	
+
 	public static HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
-	
+
 	public ChainedVM(int[] instructions, int entryPoint) {
 
 		ChainedVM.ip = entryPoint;
@@ -39,27 +39,25 @@ public class ChainedVM {
 
 		this.executorChain = new ExecutorChain();
 		this.headExecutor = executorChain.getHeadExecutor();
-		
+
 		this.memoryManager = MemoryManager.getInstance();
 		this.logger = new Logger();
-		
-		
-		
+
 		testMap.put(5555, 13);
 	}
-	
+
 	public static Integer getFunc(Integer funcId) {
-		
+
 		return testMap.get(funcId);
 	}
-	
+
 	public void executeProgram() {
 
 		while (ip < instructions.length) {
 
 			int instruction = instructions[ip];
 			ip++;
-			
+
 			headExecutor.execute(instruction);
 		}
 	}
@@ -77,6 +75,24 @@ public class ChainedVM {
 	public static int top() {
 
 		return stack[sp];
+	}
+
+	@Override
+	public void store(int[] object) {
+		
+		memoryManager.store(object);
+	}
+
+	@Override
+	public int[] fetch(int objectId) {
+		
+		return memoryManager.fetch(objectId);
+	}
+
+	@Override
+	public int[] loadInstructions() {
+		
+		return memoryManager.loadInstructions();
 	}
 
 }
