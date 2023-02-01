@@ -23,7 +23,7 @@ public class ChainedVM implements InstructionsLoader, HeapCache {
 
 	public static Logger logger;
 
-	private MemoryManager memoryManager;
+	private static MemoryManager memoryManager;
 
 	public static HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
 
@@ -40,15 +40,13 @@ public class ChainedVM implements InstructionsLoader, HeapCache {
 		this.executorChain = new ExecutorChain();
 		this.headExecutor = executorChain.getHeadExecutor();
 
-		this.memoryManager = MemoryManager.getInstance();
-		this.logger = new Logger();
-
-		testMap.put(5555, 13);
+		ChainedVM.memoryManager = MemoryManager.getInstance();
+		ChainedVM.logger = new Logger();
 	}
 
-	public static Integer getFunc(Integer funcId) {
+	public static int getMethodAddress(int methodId) {
 
-		return testMap.get(funcId);
+		return memoryManager.fetchMethodAddress(methodId);
 	}
 
 	public void executeProgram() {
@@ -79,19 +77,19 @@ public class ChainedVM implements InstructionsLoader, HeapCache {
 
 	@Override
 	public void store(int[] object) {
-		
+
 		memoryManager.store(object);
 	}
 
 	@Override
 	public int[] fetch(int objectId) {
-		
+
 		return memoryManager.fetch(objectId);
 	}
 
 	@Override
 	public int[] loadInstructions() {
-		
+
 		return memoryManager.loadInstructions();
 	}
 

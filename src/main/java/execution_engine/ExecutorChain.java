@@ -944,7 +944,7 @@ public class ExecutorChain {
 			if (checkInstruction(instruction)) {
 
 				int funcId = ChainedVM.instructions[ChainedVM.ip++];
-				int funcAddr = ChainedVM.getFunc(funcId);
+				int funcAddr = ChainedVM.getMethodAddress(funcId);
 				int numArgs = ChainedVM.instructions[funcAddr++];
 
 				for (int i = 0; i < numArgs; i++) {
