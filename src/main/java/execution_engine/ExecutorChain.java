@@ -166,7 +166,7 @@ public class ExecutorChain {
 				int secondOperand = ChainedVM.pop();
 				int firstOperand = ChainedVM.pop();
 				ChainedVM.push(firstOperand - secondOperand);
-				
+
 			} else {
 				callNext(instruction);
 			}
@@ -762,7 +762,7 @@ public class ExecutorChain {
 				int value = ChainedVM.pop();
 				int storageIndex = ChainedVM.pop();
 				ChainedVM.localStorage[storageIndex] = value;
-				
+
 			} else {
 				callNext(instruction);
 			}
@@ -864,12 +864,12 @@ public class ExecutorChain {
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-				
+
 				Integer integerValue = ChainedVM.pop();
 				String stringValue = integerValue.toString();
-				System.out.println("OUTPUT: " + stringValue);
+				System.out.println(stringValue);
 				ChainedVM.logger.log(stringValue);
-				
+
 			} else {
 				callNext(instruction);
 			}
@@ -903,15 +903,13 @@ public class ExecutorChain {
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-				
+
 				ChainedVM.ip = ChainedVM.instructions.length;
-				
-				System.out.println("HAAAALT");
-				
+
 				return;
-				
+
 			} else {
-				
+
 				return;
 			}
 		}
@@ -939,44 +937,32 @@ public class ExecutorChain {
 
 			return opcode == instruction;
 		}
-		
+
 		@Override
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-				
+
 				int funcId = ChainedVM.instructions[ChainedVM.ip++];
 				int funcAddr = ChainedVM.getFunc(funcId);
-				
-				System.out.println("ADDDR: " + funcAddr);
-				
 				int numArgs = ChainedVM.instructions[funcAddr++];
-				
-				System.out.println("OLOLO" + numArgs);
-				
-				
-				for(int i = 0; i < numArgs; i++) {
-					
+
+				for (int i = 0; i < numArgs; i++) {
+
 					int variableId = ChainedVM.instructions[funcAddr++];
-					System.out.println("VARID: " + variableId);
-					
+
 					ChainedVM.localVariablesTable.put(variableId, ChainedVM.nextAvailableIndex++);
-					
+
 					int value = ChainedVM.pop();
 					int storageIndex = ChainedVM.localVariablesTable.get(variableId);
 					ChainedVM.localStorage[storageIndex] = value;
 				}
-				
-				System.out.println("FP: " + ChainedVM.fp + " IP " + ChainedVM.ip);
-				
+
 				ChainedVM.push(ChainedVM.fp);
 				ChainedVM.push(ChainedVM.ip);
 				ChainedVM.fp = ChainedVM.sp;
 				ChainedVM.ip = funcAddr;
-				
-				System.out.println("INSTRUCTION: " + ChainedVM.instructions[ChainedVM.ip]);
-				
-				
+
 			} else {
 				callNext(instruction);
 			}
@@ -1010,20 +996,15 @@ public class ExecutorChain {
 		public void execute(int instruction) {
 
 			if (checkInstruction(instruction)) {
-				
+
 				int returnValue = ChainedVM.pop();
-				System.out.println("RET VALUE: " + returnValue);
-				System.out.println("SP VALUE: " + ChainedVM.sp);
-				System.out.println("FRAME POINTER: " + ChainedVM.fp);
-				System.out.println("I POINTER: " + ChainedVM.ip);
 				ChainedVM.sp = ChainedVM.fp;
-				
+
 				ChainedVM.ip = ChainedVM.pop();
 				ChainedVM.fp = ChainedVM.pop();
-				
+
 				ChainedVM.push(returnValue);
-				
-				
+
 			} else {
 				callNext(instruction);
 			}
@@ -1059,12 +1040,11 @@ public class ExecutorChain {
 			if (checkInstruction(instruction)) {
 
 				int variableId = ChainedVM.instructions[ChainedVM.ip++];
+
 				if (!ChainedVM.localVariablesTable.containsKey(variableId)) {
 					ChainedVM.localVariablesTable.put(variableId, ChainedVM.nextAvailableIndex++);
 				}
-				
-				System.out.println("STORED AT: " + ChainedVM.localVariablesTable.get(variableId));
-				
+
 				ChainedVM.push(ChainedVM.localVariablesTable.get(variableId));
 
 			} else {

@@ -55,19 +55,6 @@ public class ChainedVM {
 			int instruction = instructions[ip];
 			ip++;
 			
-			System.out.println("CURRENT INSTRUCTION: " + instruction + " IP: " + ip);
-			System.out.println("STACK POINTER: " + sp);
-			System.out.println();
-			
-			System.out.println("STORAGE SIZE: " + localVariablesTable);
-			
-			for(int value : stack) {
-				
-				System.out.print(value + " ");
-			}
-			
-			System.out.println();
-			
 			headExecutor.execute(instruction);
 		}
 	}
