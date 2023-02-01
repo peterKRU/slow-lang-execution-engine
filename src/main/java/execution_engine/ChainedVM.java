@@ -23,6 +23,8 @@ public class ChainedVM {
 	
 	public static Logger logger;
 	
+	private MemoryManager memoryManager;
+	
 	public static HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
 	
 	public ChainedVM(int[] instructions, int entryPoint) {
@@ -38,7 +40,10 @@ public class ChainedVM {
 		this.executorChain = new ExecutorChain();
 		this.headExecutor = executorChain.getHeadExecutor();
 		
+		this.memoryManager = MemoryManager.getInstance();
 		this.logger = new Logger();
+		
+		
 		
 		testMap.put(5555, 13);
 	}
