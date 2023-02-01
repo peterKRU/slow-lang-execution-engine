@@ -378,7 +378,6 @@ public class ExecutorChain {
 
 			if (checkInstruction(instruction)) {
 
-				System.out.println("NOT IMPLEMENTED " + opcode);
 			} else {
 				callNext(instruction);
 			}
