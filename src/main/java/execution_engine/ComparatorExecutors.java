@@ -3,11 +3,6 @@ package execution_engine;
 import java.util.ArrayList;
 import java.util.List;
 
-import execution_engine.ArithmeticExecutors.IADD;
-import execution_engine.ArithmeticExecutors.IDIV;
-import execution_engine.ArithmeticExecutors.IMUL;
-import execution_engine.ArithmeticExecutors.ISUB;
-
 public class ComparatorExecutors implements ExecutorGroup {
 
 	private class IEQ extends AbstractExecutor {
@@ -125,7 +120,7 @@ public class ComparatorExecutors implements ExecutorGroup {
 
 		AbstractExecutor igt = new IGT();
 		executors.add(igt);
-		
+
 		return executors;
 	}
 

@@ -370,7 +370,7 @@ public class MemoryHandlerExecutors implements ExecutorGroup {
 
 	@Override
 	public List<AbstractExecutor> getExecutors() {
-		
+
 		List<AbstractExecutor> executors = new ArrayList<AbstractExecutor>();
 
 		AbstractExecutor iconst = new ICONST();
@@ -383,26 +383,26 @@ public class MemoryHandlerExecutors implements ExecutorGroup {
 		executors.add(gload);
 
 		AbstractExecutor lstore = new LSTORE();
-		executors.add(lstore);		
-		
+		executors.add(lstore);
+
 		AbstractExecutor gstore = new GSTORE();
 		executors.add(gstore);
-		
+
 		AbstractExecutor ass = new ASS();
 		executors.add(ass);
-		
+
 		AbstractExecutor lref = new LREF();
 		executors.add(lref);
-		
+
 		AbstractExecutor gref = new GREF();
 		executors.add(gref);
-		
+
 		AbstractExecutor vstore = new VSTORE();
 		executors.add(vstore);
-		
+
 		AbstractExecutor vload = new VLOAD();
 		executors.add(vload);
-		
+
 		return executors;
 	}
 

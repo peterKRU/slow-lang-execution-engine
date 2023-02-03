@@ -158,21 +158,21 @@ public class ArithmeticExecutors implements ExecutorGroup {
 
 	@Override
 	public List<AbstractExecutor> getExecutors() {
-		
+
 		List<AbstractExecutor> executors = new ArrayList<AbstractExecutor>();
-		
+
 		AbstractExecutor iadd = new IADD();
 		executors.add(iadd);
-		
+
 		AbstractExecutor isub = new ISUB();
 		executors.add(isub);
-		
+
 		AbstractExecutor imul = new IMUL();
 		executors.add(imul);
-		
+
 		AbstractExecutor idiv = new IDIV();
 		executors.add(idiv);
-		
+
 		return executors;
 	}
 
