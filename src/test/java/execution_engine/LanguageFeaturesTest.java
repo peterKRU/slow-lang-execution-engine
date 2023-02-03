@@ -13,6 +13,27 @@ import org.junit.jupiter.api.Test;
 class LanguageFeaturesTest {
 
 	@Test
+	@DisplayName("Test function calls with two methods: should log 15")
+	final void functionCallTestTwoMethods() {
+
+		int[] testCode = { 88, 120, 80, 1, 80, 10, 102, 5555, 85, 89, 
+				120, 100, 101, 2, 2000, 3000, 88, 1000, 89, 2000, 89, 
+				3000, 21, 85, 89, 1000, 103 };
+		
+		
+		ChainedVM chainedVM = new ChainedVM(testCode, 0);
+		chainedVM.executeProgram();
+
+		List<String> log = ChainedVM.logger.getLog();
+
+		assumeTrue(log.size() == 1);
+
+		Integer resultValue = ResourceReader.readInteger(log.get(0));
+
+		assertTrue(resultValue == 9);
+	}	
+	
+	@Test
 	@DisplayName("Test function calls with subtraction: should log 9")
 	final void functionCallTestWithSubtraction() {
 

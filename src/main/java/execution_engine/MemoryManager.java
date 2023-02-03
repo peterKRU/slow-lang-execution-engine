@@ -6,23 +6,16 @@ public class MemoryManager implements InstructionsLoader, HeapCache {
 
 	private static MemoryManager memoryManagerInstance;
 	private int[] mainExecutionBlock;
-//	private ClassSpace classSpace;
-//	private Heap heap;
-//	private GarbageCollector garbageCollector;
-	
+	private SlowLangClassLoader classLoader;
+
 	private HashMap<Integer, Integer> methodRegister;
-	
-	private MemoryManager() {
-		
-		this.mainExecutionBlock = SlowLangClassLoader.loadMainExecutionBlock();
-		
-		this.methodRegister = new HashMap<Integer, Integer>();
-		SlowLangClassLoader.linkMethods(methodRegister);
+
+	private MemoryManager(SlowLangClassLoader classLoader) {
 		
 	}
-	
+
 	public static MemoryManager getInstance() {
-		
+
 		if (memoryManagerInstance == null) {
 
 			memoryManagerInstance = new MemoryManager();
@@ -32,7 +25,7 @@ public class MemoryManager implements InstructionsLoader, HeapCache {
 			return memoryManagerInstance;
 		}
 	}
-
+	
 	private void invokeGarbageCollection() {
 
 	}
@@ -53,19 +46,19 @@ public class MemoryManager implements InstructionsLoader, HeapCache {
 
 		return null;
 	}
-	
+
 	public int fetchMethodAddress(int methodId) {
-		
-		if(methodRegister.containsKey(methodId)) {
-			
+
+		if (methodRegister.containsKey(methodId)) {
+
 			return methodRegister.get(methodId);
-		}
-		else {
-			
+
+		} else {
+
 			System.err.println("Method not found.");
-			
+
 			return -1;
 		}
-		
+
 	}
 }

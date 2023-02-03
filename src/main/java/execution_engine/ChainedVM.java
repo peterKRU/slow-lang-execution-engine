@@ -25,8 +25,6 @@ public class ChainedVM implements InstructionsLoader, HeapCache {
 
 	private static MemoryManager memoryManager;
 
-	public static HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
-
 	public ChainedVM(int[] instructions, int entryPoint) {
 
 		ChainedVM.ip = entryPoint;
