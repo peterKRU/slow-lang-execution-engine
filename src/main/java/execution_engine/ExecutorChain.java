@@ -1,13 +1,22 @@
 package execution_engine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExecutorChain {
 
 	private AbstractExecutor headExecutor;
 	private AbstractExecutor tailExecutor;
 	private AbstractExecutor lastRegisteredExecutor;
-
+	private List<List<AbstractExecutor>> executorGroups;
+	
 	public ExecutorChain() {
-
+		
+		executorGroups = new ArrayList<List<AbstractExecutor>>();
+		
+		List<AbstractExecutor> arithmeticGroup = new ArithmeticExecutors().getExecutors();
+		executorGroups.add(arithmeticGroup);
+		
 		AbstractExecutor iadd = new IADD();
 		AbstractExecutor halt = new HALT();
 
