@@ -16,6 +16,9 @@ public class ExecutorChain {
 		
 		List<AbstractExecutor> arithmeticGroup = new ArithmeticExecutors().getExecutors();
 		executorGroups.add(arithmeticGroup);
+
+		List<AbstractExecutor> logicalGroup = new LogicalExecutors().getExecutors();
+		executorGroups.add(logicalGroup);		
 		
 		AbstractExecutor iadd = new IADD();
 		AbstractExecutor halt = new HALT();
