@@ -1,5 +1,6 @@
 package execution_engine;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class MemoryManager implements InstructionsLoader, HeapCache {
@@ -8,30 +9,33 @@ public class MemoryManager implements InstructionsLoader, HeapCache {
 	private Heap heap;
 	private ClassSpace classSpace;
 	private int[] mainExecutionBlock;
+	private int[] instructions;
 	private HashMap<Integer, Integer> methodRegister;
-	
+
 	private ProgramLoader programLoader;
-	
-	public MemoryManager(String fileName) {
-		
+
+	public MemoryManager(String fileName) throws IOException {
+
 		bytecodeVerifier = new BytecodeVerifier();
 		heap = new Heap();
 		classSpace = new ClassSpace();
 		mainExecutionBlock = new int[0];
 		methodRegister = new HashMap<Integer, Integer>();
-		
-		programLoader = new ProgramLoader(bytecodeVerifier, heap, classSpace, mainExecutionBlock, methodRegister);
+
+		programLoader = new ProgramLoader(bytecodeVerifier, heap, classSpace, mainExecutionBlock, instructions,
+				methodRegister);
 		programLoader.loadProgram(fileName);
 	}
-	
-	private void invokeGarbageCollection() {
 
+	@SuppressWarnings("unused")
+	private void invokeGarbageCollection(Heap heap) {
+		
 	}
 
 	@Override
 	public int[] loadInstructions() {
 
-		return mainExecutionBlock;
+		return instructions;
 	}
 
 	@Override

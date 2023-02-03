@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class BytecodeImporter {
+public class BytecodeImporter implements FileImporter{
 
-	public static int[] importBytecode(String fileName) throws IOException {
+	private int[] importBytecode(String fileName) throws IOException {
 
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
@@ -17,6 +17,12 @@ public class BytecodeImporter {
 		reader.close();
 
 		return intArray;
+	}
+
+	@Override
+	public int[] importFile(String fileName) throws IOException {
+		
+		return importBytecode(fileName);
 	}
 
 }

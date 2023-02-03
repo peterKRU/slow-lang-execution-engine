@@ -1,6 +1,8 @@
 package execution_engine;
 
+import java.io.IOException;
+
 public interface FileImporter {
-	
-	public String importFile(String fileName);
+
+	public int[] importFile(String fileName) throws IOException;
 }
