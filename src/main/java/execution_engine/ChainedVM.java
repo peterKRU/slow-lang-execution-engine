@@ -25,8 +25,10 @@ public class ChainedVM implements InstructionsLoader, HeapCache {
 
 	private static MemoryManager memoryManager;
 
-	public ChainedVM(int[] instructions, int entryPoint) {
-
+	public ChainedVM(MemoryManager memoryManager, int[] instructions, int entryPoint) {
+		
+		ChainedVM.memoryManager = memoryManager;
+			
 		ChainedVM.ip = entryPoint;
 		ChainedVM.instructions = instructions;
 		ChainedVM.stack = new int[ConstantsTable.DEFAULT_STACK_SIZE];
@@ -38,7 +40,6 @@ public class ChainedVM implements InstructionsLoader, HeapCache {
 		this.executorChain = new ExecutorChain();
 		this.headExecutor = executorChain.getHeadExecutor();
 
-		ChainedVM.memoryManager = MemoryManager.getInstance();
 		ChainedVM.logger = new Logger();
 	}
 

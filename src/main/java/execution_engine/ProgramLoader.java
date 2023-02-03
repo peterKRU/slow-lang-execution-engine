@@ -3,12 +3,15 @@ package execution_engine;
 import java.util.HashMap;
 
 public class ProgramLoader {
-
-	public ProgramLoader() {
+	
+	private BytecodeVerifier bytecodeVerifier;
+	
+	public ProgramLoader(BytecodeVerifier bytecodeVerifier, Heap heap, ClassSpace classSpace, int[] mainExecutionBlock, HashMap<Integer, Integer> methodRegister) {
 		  
 	}
 
-	public void loadProgram(String fileName, Heap heap, ClassSpace classSpace, int[] mainExecutionBlock, HashMap<Integer, Integer> methodRegister) {
+	public void loadProgram(String fileName) {
+		
 		
 	}
 	

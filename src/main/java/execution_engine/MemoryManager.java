@@ -4,26 +4,24 @@ import java.util.HashMap;
 
 public class MemoryManager implements InstructionsLoader, HeapCache {
 
-	private static MemoryManager memoryManagerInstance;
+	private BytecodeVerifier bytecodeVerifier;
+	private Heap heap;
+	private ClassSpace classSpace;
 	private int[] mainExecutionBlock;
-	private SlowLangClassLoader classLoader;
-
 	private HashMap<Integer, Integer> methodRegister;
-
-	private MemoryManager(SlowLangClassLoader classLoader) {
+	
+	private ProgramLoader programLoader;
+	
+	public MemoryManager(String fileName) {
 		
-	}
-
-	public static MemoryManager getInstance() {
-
-		if (memoryManagerInstance == null) {
-
-			memoryManagerInstance = new MemoryManager();
-
-			return memoryManagerInstance;
-		} else {
-			return memoryManagerInstance;
-		}
+		bytecodeVerifier = new BytecodeVerifier();
+		heap = new Heap();
+		classSpace = new ClassSpace();
+		mainExecutionBlock = new int[0];
+		methodRegister = new HashMap<Integer, Integer>();
+		
+		programLoader = new ProgramLoader(bytecodeVerifier, heap, classSpace, mainExecutionBlock, methodRegister);
+		programLoader.loadProgram(fileName);
 	}
 	
 	private void invokeGarbageCollection() {
