@@ -39,6 +39,11 @@ public class ProgramLoader {
 			throw new RuntimeException("Invalid bytecode");
 		}
 		
+		for(int i : instructions) {
+			
+			System.out.print(i + " ");
+		}
+		
 		loadMainExecutionBlock(mainExecutionBlock, instructions);
 		bindMethods(methodRegister, mainExecutionBlock, instructions);
 		
