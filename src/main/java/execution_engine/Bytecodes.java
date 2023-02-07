@@ -35,4 +35,11 @@ public class Bytecodes {
 	public static final int CALL = 102;
 	public static final int RET = 103;
 	
+	public static final int MAIN = 120;
+	public static final int CDECL = 121;
+	public static final int MDECL = 122;
+	public static final int IDECL = 123;
+	public static final int IGDECL = 124;
+	public static final int FDECL = 125;
+	
 }
