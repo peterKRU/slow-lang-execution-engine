@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class ProgramLoader {
 
@@ -15,9 +16,10 @@ public class ProgramLoader {
 	private HashMap<Integer, Integer> methodRegister;
 
 	private FileImporter fileImporter;
+	private static String programName;
 
-	public ProgramLoader(BytecodeVerifier bytecodeVerifier, Heap heap, ClassSpace classSpace, int[] mainExecutionBlock, int[] instructions,
-			HashMap<Integer, Integer> methodRegister) {
+	public ProgramLoader(BytecodeVerifier bytecodeVerifier, Heap heap, ClassSpace classSpace, int[] mainExecutionBlock,
+			int[] instructions, HashMap<Integer, Integer> methodRegister) {
 
 		this.bytecodeVerifier = bytecodeVerifier;
 		this.heap = heap;
@@ -31,23 +33,29 @@ public class ProgramLoader {
 	}
 
 	public void loadProgram(String fileName) throws IOException {
-		
+
 		instructions = loadProgramBytes(fileName);
+		programName = stripFileExtensions(fileName);
 		
-		if(!bytecodeVerifier.verifyBytecode(instructions)) {
-			
+		Decompiler.decompile(instructions);
+		
+		int expectedProgramId = Objects.hashCode(programName);
+		int actualProgramId = instructions[0] - Bytecodes.MAIN;
+		
+		if (!bytecodeVerifier.verifyProgramId(expectedProgramId, actualProgramId)) {
+
 			throw new RuntimeException("Invalid bytecode");
 		}
-		
-		for(int i : instructions) {
-			
+
+		for (int i : instructions) {
+
 			System.out.print(i + " ");
 		}
-		
+
 		loadMainExecutionBlock(mainExecutionBlock, instructions);
 		bindMethods(methodRegister, mainExecutionBlock, instructions);
-		
-		loadClasses(classSpace);
+
+		loadClasses(classSpace, instructions);
 		loadObjects(heap);
 	}
 
@@ -60,21 +68,26 @@ public class ProgramLoader {
 
 	}
 
-	private void loadClasses(ClassSpace classSpace) {
-
+	private void loadClasses(ClassSpace classSpace, int[] instructions) {
+		
+		
+		for(int i = 0; i < instructions.length; i++) {
+			
+			
+		}
 	}
 
 	private void loadMainExecutionBlock(int[] mainExecutionBlock, int[] instructions) {
 
 		List<Integer> mainExecutionBlockList = new ArrayList<Integer>();
-
-		for (int i = 0; i < instructions.length; i++) {
+		int mainExecutionBlockEndCode = Objects.hashCode(programName) - Bytecodes.HALT;
+		
+		for (int i = 1; i < instructions.length; i++) {
 
 			int instruction = instructions[i];
 
-			if (instruction == Bytecodes.HALT) {
+			if (instruction == mainExecutionBlockEndCode) {
 
-				mainExecutionBlockList.add(instruction);
 				break;
 			}
 
@@ -83,7 +96,7 @@ public class ProgramLoader {
 
 		mainExecutionBlock = mainExecutionBlockList.stream().mapToInt(i -> i).toArray();
 	}
-
+	
 	private void bindMethods(HashMap<Integer, Integer> methodRegister, int[] mainExecutionBlock, int[] instructions) {
 
 		for (int i = 0; i < mainExecutionBlock.length; i++) {
@@ -111,4 +124,19 @@ public class ProgramLoader {
 		}
 	}
 
+	private static String getProgramName() {
+
+		return programName;
+	}
+
+	private static String stripFileExtensions(String fileName) {
+
+		if (fileName.endsWith("compiled.txt")) {
+
+			return fileName.substring(0, fileName.length() - "_compiled.txt".length());
+		}
+
+		return fileName;
+	}
+	
 }
