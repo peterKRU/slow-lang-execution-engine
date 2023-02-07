@@ -14,14 +14,16 @@ class LanguageFeaturesTest {
 
 	@Test
 	@DisplayName("Test function calls with two methods: should log 15")
-	final void functionCallTestTwoMethods() {
+	final void functionCallTestTwoMethods() throws IOException {
 
 		int[] testCode = { 88, 120, 80, 1, 80, 10, 102, 5555, 85, 89, 
 				120, 100, 101, 2, 2000, 3000, 88, 1000, 89, 2000, 89, 
 				3000, 21, 85, 89, 1000, 103 };
 		
 		
-		ChainedVM chainedVM = new ChainedVM(testCode, 0);
+		MemoryManager memoryManager = new MemoryManager("placeholder");
+		
+		ChainedVM chainedVM = new ChainedVM(memoryManager);
 		chainedVM.executeProgram();
 
 		List<String> log = ChainedVM.logger.getLog();
@@ -35,11 +37,14 @@ class LanguageFeaturesTest {
 	
 	@Test
 	@DisplayName("Test function calls with subtraction: should log 9")
-	final void functionCallTestWithSubtraction() {
+	final void functionCallTestWithSubtraction() throws IOException {
 
 		int[] testCode = { 88, 120, 80, 1, 80, 10, 102, 5555, 85, 89, 120, 100, 101, 2, 2000, 3000, 88, 1000, 89, 2000,
 				89, 3000, 21, 85, 89, 1000, 103 };
-		ChainedVM chainedVM = new ChainedVM(testCode, 0);
+		
+		MemoryManager memoryManager = new MemoryManager("placeholder");
+		
+		ChainedVM chainedVM = new ChainedVM(memoryManager);
 		chainedVM.executeProgram();
 
 		List<String> log = ChainedVM.logger.getLog();
@@ -53,11 +58,14 @@ class LanguageFeaturesTest {
 
 	@Test
 	@DisplayName("Test function calls with subtraction: should log 11")
-	final void functionCallTestWithAddition() {
+	final void functionCallTestWithAddition() throws IOException {
 
 		int[] testCode = { 88, 120, 80, 1, 80, 10, 102, 5555, 85, 89, 120, 100, 101, 2, 2000, 3000, 88, 1000, 89, 2000,
 				89, 3000, 20, 85, 89, 1000, 103 };
-		ChainedVM chainedVM = new ChainedVM(testCode, 0);
+		
+		MemoryManager memoryManager = new MemoryManager("placeholder");
+		
+		ChainedVM chainedVM = new ChainedVM(memoryManager);
 		chainedVM.executeProgram();
 
 		List<String> log = ChainedVM.logger.getLog();
@@ -75,7 +83,10 @@ class LanguageFeaturesTest {
 
 		String resourceString = ResourceReader.readResource("assignmentExpression_compiled.txt");
 		int[] bytecode = ResourceReader.readIntegers(resourceString);
-		ChainedVM chainedVM = new ChainedVM(bytecode, 0);
+		
+		MemoryManager memoryManager = new MemoryManager("placeholder");
+		
+		ChainedVM chainedVM = new ChainedVM(memoryManager);
 		chainedVM.executeProgram();
 
 		List<String> log = ChainedVM.logger.getLog();
@@ -93,7 +104,10 @@ class LanguageFeaturesTest {
 
 		String resourceString = ResourceReader.readResource("assignmentExpression2_compiled.txt");
 		int[] bytecode = ResourceReader.readIntegers(resourceString);
-		ChainedVM chainedVM = new ChainedVM(bytecode, 0);
+		
+		MemoryManager memoryManager = new MemoryManager("placeholder");
+		
+		ChainedVM chainedVM = new ChainedVM(memoryManager);
 		chainedVM.executeProgram();
 
 		List<String> log = ChainedVM.logger.getLog();
@@ -115,7 +129,10 @@ class LanguageFeaturesTest {
 
 		String resourceString = ResourceReader.readResource("additiveExpression_compiled.txt");
 		int[] bytecode = ResourceReader.readIntegers(resourceString);
-		ChainedVM chainedVM = new ChainedVM(bytecode, 0);
+		
+		MemoryManager memoryManager = new MemoryManager("placeholder");
+		
+		ChainedVM chainedVM = new ChainedVM(memoryManager);
 		chainedVM.executeProgram();
 
 		List<String> log = ChainedVM.logger.getLog();
