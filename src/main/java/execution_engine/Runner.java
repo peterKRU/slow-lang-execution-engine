@@ -6,7 +6,7 @@ public class Runner {
 
 	public static void main(String[] args) throws IOException {
 		
-		String testProgramFileName = "test_compiled.txt";
+		String testProgramFileName = "test_classes_compiled.txt";
 		
 		MemoryManager memoryManager = new MemoryManager(testProgramFileName);
 		ChainedVM chainedVM = new ChainedVM(memoryManager);
