@@ -6,4 +6,9 @@ public class BytecodeVerifier {
 		
 		return true;
 	}
+	
+	public boolean verifyProgramId(int expectedId, int actualId) {
+		
+		return expectedId == actualId;
+	}
 }
