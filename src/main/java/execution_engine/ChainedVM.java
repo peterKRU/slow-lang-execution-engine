@@ -3,7 +3,7 @@ package execution_engine;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChainedVM implements InstructionsLoader, HeapCache {
+public class ChainedVM implements InstructionsLoader, ObjectCache {
 
 	public static int[] instructions;
 	public static int[] stack;
@@ -75,21 +75,21 @@ public class ChainedVM implements InstructionsLoader, HeapCache {
 	}
 
 	@Override
-	public void store(int[] object) {
+	public int[] loadInstructions() {
 
-		memoryManager.store(object);
+		return memoryManager.loadInstructions();
+	}
+
+	@Override
+	public void store(int[] object) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public int[] fetch(int objectId) {
-
-		return memoryManager.fetch(objectId);
-	}
-
-	@Override
-	public int[] loadInstructions() {
-
-		return memoryManager.loadInstructions();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
