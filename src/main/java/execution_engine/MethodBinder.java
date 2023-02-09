@@ -5,20 +5,18 @@ import java.util.List;
 
 public class MethodBinder {
 
-	private int[] instructions;
 	private ClassSpace classSpace;
 	private HashMap<Integer, Integer> methodRegister;
 
-	public MethodBinder(int[] instructions, ClassSpace classSpace, HashMap<Integer, Integer> methodRegister) {
+	public MethodBinder(ClassSpace classSpace, HashMap<Integer, Integer> methodRegister) {
 
-		this.instructions = instructions;
 		this.classSpace = classSpace;
 		this.methodRegister = methodRegister;
 	}
 
-	public void bindMethods() {
+	public void bindMethods(int[] instructions) {
 
-		List<Integer> classIdRegister = classSpace.getClassIds();
+		List<Integer> classIdRegister = classSpace.getClassIdList();
 
 		for (int classId : classIdRegister) {
 
@@ -26,11 +24,13 @@ public class MethodBinder {
 
 			for (List<Integer> classMethod : classMethods) {
 
-				int methodId = instructions[classMethod.get(0)];
+				int methodId = instructions[classMethod.get(0) + 1];
 				int methodAddress = classMethod.get(0);
+
 				methodRegister.put(methodId, methodAddress);
 			}
 		}
+
 	}
 
 }
