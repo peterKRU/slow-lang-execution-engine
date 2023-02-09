@@ -13,24 +13,22 @@ public class ProgramLoader {
 
 	private int[] instructions;
 
-	@SuppressWarnings("unused")
 	private ClassSpace classSpace;
-	@SuppressWarnings("unused")
 	private HashMap<Integer, Integer> methodRegister;
 
 	private static String programName;
 
-	public ProgramLoader(ClassSpace classSpace, int[] instructions, HashMap<Integer, Integer> methodRegister) {
+	public ProgramLoader() {
 
 		bytecodeVerifier = new BytecodeVerifier();
 		fileImporter = new BytecodeImporter();
 
-		this.instructions = instructions;
-		this.classSpace = classSpace;
-		this.methodRegister = methodRegister;
+		instructions = new int[0];
+		classSpace = new ClassSpace();
+		methodRegister = new HashMap<Integer, Integer>();
 
 		classLoader = new SlowLangClassLoader(classSpace);
-		methodBinder = new MethodBinder(instructions, classSpace, methodRegister);
+		methodBinder = new MethodBinder(classSpace, methodRegister);
 	}
 
 	public void loadProgram(String fileName) throws IOException {
@@ -49,7 +47,7 @@ public class ProgramLoader {
 		}
 
 		classLoader.loadClasses(instructions);
-		methodBinder.bindMethods();
+		methodBinder.bindMethods(instructions);
 	}
 
 	private int[] loadProgramBytes(String fileName) throws IOException {
@@ -67,4 +65,18 @@ public class ProgramLoader {
 		return fileName;
 	}
 
+	public int[] getInstructions() {
+
+		return instructions;
+	}
+
+	public ClassSpace getClassSpace() {
+
+		return classSpace;
+	}
+
+	public HashMap<Integer, Integer> getMethodRegister() {
+
+		return methodRegister;
+	}
 }
