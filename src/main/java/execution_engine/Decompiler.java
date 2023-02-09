@@ -63,4 +63,61 @@ public class Decompiler {
 
 		}
 	}
+
+	public static String decompileInstruction(int instruction) {
+
+		String decompiled = "";
+
+		if (instruction == Bytecodes.IADD) {
+
+			decompiled = "IADD";
+
+		} else if (instruction == Bytecodes.ISUB) {
+
+			decompiled = "ISUB";
+
+		} else if (instruction == Bytecodes.ICONST) {
+
+			decompiled = "ICONST";
+
+		} else if (instruction == Bytecodes.VSTORE) {
+
+			decompiled = "VSTORE";
+
+		} else if (instruction == Bytecodes.VLOAD) {
+
+			decompiled = "VLOAD";
+
+		} else if (instruction == Bytecodes.ASS) {
+
+			decompiled = "ASS";
+
+		} else if (instruction == Bytecodes.CALL) {
+
+			decompiled = "CALL";
+
+		} else if (instruction == Bytecodes.CDECL) {
+
+			decompiled = "CDECL";
+
+		} else if (instruction == Bytecodes.PRINT) {
+
+			decompiled = "PRINT";
+
+		} else if (instruction == Bytecodes.MDECL) {
+
+			decompiled = "MDECL";
+
+		} else if (instruction == Bytecodes.RET) {
+
+			decompiled = "RET";
+		}
+
+		else {
+
+			decompiled = "UNKNOWN TOKEN";
+		}
+
+		return decompiled;
+	}
 }
