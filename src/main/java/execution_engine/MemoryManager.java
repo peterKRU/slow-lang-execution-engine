@@ -3,12 +3,10 @@ package execution_engine;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class MemoryManager implements InstructionsLoader, HeapCache {
+public class MemoryManager implements InstructionsLoader, ObjectCache {
 
-	private BytecodeVerifier bytecodeVerifier;
 	private Heap heap;
 	private ClassSpace classSpace;
-	private int[] mainExecutionBlock;
 	private int[] instructions;
 	private HashMap<Integer, Integer> methodRegister;
 
@@ -16,37 +14,23 @@ public class MemoryManager implements InstructionsLoader, HeapCache {
 
 	public MemoryManager(String fileName) throws IOException {
 
-		bytecodeVerifier = new BytecodeVerifier();
-		heap = new Heap();
+		heap = new Heap(new HashMap<Integer, int[]>());
 		classSpace = new ClassSpace();
-		mainExecutionBlock = new int[0];
 		methodRegister = new HashMap<Integer, Integer>();
 
-		programLoader = new ProgramLoader(bytecodeVerifier, heap, classSpace, mainExecutionBlock, instructions,
-				methodRegister);
+		programLoader = new ProgramLoader(classSpace, instructions, methodRegister);
 		programLoader.loadProgram(fileName);
 	}
 
 	@SuppressWarnings("unused")
 	private void invokeGarbageCollection(Heap heap) {
-		
+
 	}
 
 	@Override
 	public int[] loadInstructions() {
 
 		return instructions;
-	}
-
-	@Override
-	public void store(int[] object) {
-
-	}
-
-	@Override
-	public int[] fetch(int objectId) {
-
-		return null;
 	}
 
 	public int fetchMethodAddress(int methodId) {
@@ -63,4 +47,17 @@ public class MemoryManager implements InstructionsLoader, HeapCache {
 		}
 
 	}
+
+	@Override
+	public void store(int[] object) {
+		
+		heap.store(object);
+	}
+
+	@Override
+	public int[] fetch(int objectId) {
+		
+		return heap.fetch(objectId);
+	}
+
 }
