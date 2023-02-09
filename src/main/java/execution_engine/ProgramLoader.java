@@ -10,14 +10,15 @@ public class ProgramLoader {
 	private FileImporter fileImporter;
 	private SlowLangClassLoader classLoader;
 	private MethodBinder methodBinder;
-
+	
 	private int[] instructions;
 
 	private ClassSpace classSpace;
 	private HashMap<Integer, Integer> methodRegister;
 
 	private static String programName;
-
+	private static boolean decompilerEnabled = false;
+	
 	public ProgramLoader() {
 
 		bytecodeVerifier = new BytecodeVerifier();
@@ -35,8 +36,11 @@ public class ProgramLoader {
 
 		instructions = loadProgramBytes(fileName);
 		programName = stripFileExtensions(fileName);
-
-		Decompiler.decompile(instructions);
+		
+		if (decompilerEnabled) {
+			
+			Decompiler.decompile(instructions);
+		}
 
 		int expectedProgramId = Objects.hashCode(programName);
 		int actualProgramId = instructions[0] - Bytecodes.MAIN;
@@ -78,5 +82,10 @@ public class ProgramLoader {
 	public HashMap<Integer, Integer> getMethodRegister() {
 
 		return methodRegister;
+	}
+	
+	public static void enableDecompiler() {
+		
+		decompilerEnabled = true;
 	}
 }
