@@ -5,21 +5,28 @@ import java.util.HashMap;
 
 public class MemoryManager implements InstructionsLoader, ObjectCache {
 
-	private Heap heap;
-	private ClassSpace classSpace;
 	private int[] instructions;
+
+	@SuppressWarnings("unused")
+	private ClassSpace classSpace;
+
 	private HashMap<Integer, Integer> methodRegister;
+	private Heap heap;
 
 	private ProgramLoader programLoader;
 
 	public MemoryManager(String fileName) throws IOException {
 
 		heap = new Heap(new HashMap<Integer, int[]>());
-		classSpace = new ClassSpace();
-		methodRegister = new HashMap<Integer, Integer>();
 
-		programLoader = new ProgramLoader(classSpace, instructions, methodRegister);
+		programLoader = new ProgramLoader();
 		programLoader.loadProgram(fileName);
+
+		instructions = programLoader.getInstructions();
+		classSpace = programLoader.getClassSpace();
+		methodRegister = programLoader.getMethodRegister();
+
+		heap = new Heap(new HashMap<Integer, int[]>());
 	}
 
 	@SuppressWarnings("unused")
@@ -50,13 +57,13 @@ public class MemoryManager implements InstructionsLoader, ObjectCache {
 
 	@Override
 	public void store(int[] object) {
-		
+
 		heap.store(object);
 	}
 
 	@Override
 	public int[] fetch(int objectId) {
-		
+
 		return heap.fetch(objectId);
 	}
 
