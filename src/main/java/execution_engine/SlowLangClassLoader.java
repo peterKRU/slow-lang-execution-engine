@@ -48,71 +48,6 @@ public class SlowLangClassLoader {
 		return classAddressList;
 	}
 
-	private List<List<Integer>> parseClassesTest(int[] instructions) {
-
-		List<List<Integer>> classAddressList = new ArrayList<>();
-
-		int classStartIndex = -1;
-
-		for (int i = 0; i < instructions.length; i++) {
-
-			int instruction = instructions[i];
-
-			if (instruction == Bytecodes.CDECL) {
-
-				if (classStartIndex != -1) {
-
-					classAddressList.add(List.of(classStartIndex, i - 1));
-				}
-
-				classStartIndex = i;
-			}
-		}
-
-		if (classStartIndex != -1) {
-
-			classAddressList.add(List.of(classStartIndex, instructions.length - 1));
-		}
-
-		return classAddressList;
-	}
-
-	private void loadClassMetadataTest(int[] instructions, List<List<Integer>> classAddressList) {
-
-		for (List<Integer> classAddress : classAddressList) {
-
-			int startIndex = classAddress.get(0);
-			int endIndex = classAddress.get(1);
-
-			int classId = instructions[startIndex + 1];
-			List<List<Integer>> methodAddresses = new ArrayList<List<Integer>>();
-			int methodStartIndex = startIndex - 1;
-
-			for (int i = startIndex; i < endIndex; i++) {
-
-				int instruction = instructions[i];
-
-				if (instruction == Bytecodes.MDECL) {
-
-					if (methodStartIndex != startIndex - 1) {
-
-						methodAddresses.add(List.of(methodStartIndex, i - 1));
-					}
-
-					methodStartIndex = i;
-				}
-
-				if (methodStartIndex != startIndex - 1) {
-
-					classAddressList.add(List.of(methodStartIndex, instructions.length - 1));
-				}
-			}
-
-			classSpace.registerClass(new SlowLangClass(classId, methodAddresses));
-		}
-
-	}
-
 	private void loadClassMetadata(int[] instructions, List<List<Integer>> classAddressList) {
 
 		for (List<Integer> classAddress : classAddressList) {
@@ -143,12 +78,12 @@ public class SlowLangClassLoader {
 				methodDeclarations.add(i);
 			}
 		}
-		
+
 		methodDeclarations.add(classEndIndex);
-		
-		for(int i = 0; i < methodDeclarations.size() - 1; i++) {
-			
-			int methodStartIndex = methodDeclarations.get(i); 
+
+		for (int i = 0; i < methodDeclarations.size() - 1; i++) {
+
+			int methodStartIndex = methodDeclarations.get(i);
 			int methodEndIndex = methodDeclarations.get(i + 1) - 1;
 			methodAddressList.add(List.of(methodStartIndex, methodEndIndex));
 		}

@@ -25,7 +25,7 @@ public class MethodBinder {
 			for (List<Integer> classMethod : classMethods) {
 
 				int methodId = instructions[classMethod.get(0) + 1];
-				int methodAddress = classMethod.get(0);
+				int methodAddress = classMethod.get(0) + 1;
 
 				methodRegister.put(methodId, methodAddress);
 			}

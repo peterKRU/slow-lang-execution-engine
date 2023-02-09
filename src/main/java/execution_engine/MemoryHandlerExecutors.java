@@ -348,6 +348,7 @@ public class MemoryHandlerExecutors implements ExecutorGroup {
 
 				int variableId = ChainedVM.instructions[ChainedVM.ip++];
 				int index = ChainedVM.localVariablesTable.get(variableId);
+
 				ChainedVM.push(ChainedVM.localStorage[index]);
 
 			} else {

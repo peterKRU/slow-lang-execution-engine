@@ -101,11 +101,11 @@ public class SpecialExecutors implements ExecutorGroup {
 
 				int funcId = ChainedVM.instructions[ChainedVM.ip++];
 				int funcAddr = ChainedVM.getMethodAddress(funcId);
-				int numArgs = ChainedVM.instructions[funcAddr++];
+				int numArgs = ChainedVM.instructions[++funcAddr];
 
 				for (int i = 0; i < numArgs; i++) {
 
-					int variableId = ChainedVM.instructions[funcAddr++];
+					int variableId = ChainedVM.instructions[++funcAddr];
 
 					ChainedVM.localVariablesTable.put(variableId, ChainedVM.nextAvailableIndex++);
 

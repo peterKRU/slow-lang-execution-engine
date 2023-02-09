@@ -26,9 +26,9 @@ public class ChainedVM implements InstructionsLoader, ObjectCache {
 	private static MemoryManager memoryManager;
 
 	public ChainedVM(MemoryManager memoryManager) {
-		
+
 		ChainedVM.memoryManager = memoryManager;
-			
+
 		ChainedVM.ip = 0;
 		ChainedVM.instructions = memoryManager.loadInstructions();
 		ChainedVM.stack = new int[ConstantsTable.DEFAULT_STACK_SIZE];
@@ -41,11 +41,6 @@ public class ChainedVM implements InstructionsLoader, ObjectCache {
 		this.headExecutor = executorChain.getHeadExecutor();
 
 		ChainedVM.logger = new Logger();
-	}
-
-	public static int getMethodAddress(int methodId) {
-
-		return memoryManager.fetchMethodAddress(methodId);
 	}
 
 	public void executeProgram() {
@@ -74,6 +69,11 @@ public class ChainedVM implements InstructionsLoader, ObjectCache {
 		return stack[sp];
 	}
 
+	public static int getMethodAddress(int methodId) {
+
+		return memoryManager.fetchMethodAddress(methodId);
+	}
+
 	@Override
 	public int[] loadInstructions() {
 
@@ -82,13 +82,15 @@ public class ChainedVM implements InstructionsLoader, ObjectCache {
 
 	@Override
 	public void store(int[] object) {
-		// TODO Auto-generated method stub
-		
+
+		System.out.println("Not implemented.");
 	}
 
 	@Override
 	public int[] fetch(int objectId) {
-		// TODO Auto-generated method stub
+
+		System.out.println("Not implemented.");
+
 		return null;
 	}
 
