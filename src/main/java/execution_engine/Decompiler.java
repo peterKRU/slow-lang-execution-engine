@@ -5,7 +5,7 @@ public class Decompiler {
 	public static void decompile(int[] instructions) {
 
 		int programId = instructions[0];
-		System.out.println("PROG_ID " + programId);
+		System.out.println(0 + ": " + "PROG_ID " + programId);
 
 		for (int i = 1; i < instructions.length; i++) {
 
@@ -13,52 +13,52 @@ public class Decompiler {
 
 			if (instruction == Bytecodes.IADD) {
 
-				System.out.println("IADD");
+				System.out.println(i + ": " + "IADD");
 
 			} else if (instruction == Bytecodes.ISUB) {
 
-				System.out.println("ISUB");
+				System.out.println(i + ": " + "ISUB");
 
 			} else if (instruction == Bytecodes.ICONST) {
 
-				System.out.println("ICONST " + instructions[++i]);
+				System.out.println(i + ": " + "ICONST " + instructions[++i]);
 
 			} else if (instruction == Bytecodes.VSTORE) {
 
-				System.out.println("VSTORE " + instructions[++i]);
+				System.out.println(i + ": " + "VSTORE " + instructions[++i]);
 
 			} else if (instruction == Bytecodes.VLOAD) {
 
-				System.out.println("VLOAD " + instructions[++i]);
+				System.out.println(i + ": " + "VLOAD " + instructions[++i]);
 
 			} else if (instruction == Bytecodes.ASS) {
 
-				System.out.println("ASS");
+				System.out.println(i + ": " + "ASS");
 
 			} else if (instruction == Bytecodes.CALL) {
 
-				System.out.println("CALL " + instructions[++i]);
+				System.out.println(i + ": " + "CALL " + instructions[++i]);
 
 			} else if (instruction == Bytecodes.CDECL) {
 
-				System.out.println("CDECL " + instructions[++i]);
+				System.out.println(i + ": " + "CDECL " + instructions[++i]);
 
 			} else if (instruction == Bytecodes.PRINT) {
 
-				System.out.println("PRINT");
+				System.out.println(i + ": " + "PRINT");
 
 			} else if (instruction == Bytecodes.MDECL) {
 
-				System.out.println("MDECL " + instructions[++i]);
-			
+				System.out.println(i + ": " + "MDECL " + instructions[++i]);
+
 			} else if (instruction == Bytecodes.RET) {
-				
-				System.out.println("RET");
+
+				System.out.println(i + ": " + "RET");
 			}
 
 			else {
 
-				System.out.println("UNKNOWN TOKEN: " + instruction);
+				System.out.println(i + ": " + "UNKNOWN TOKEN: " + instruction);
 			}
 
 		}
