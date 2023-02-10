@@ -1,78 +1,60 @@
 package execution_engine;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Runner {
 
-	private static boolean useTestInput = false;
-
 	public static void main(String[] args) throws IOException {
 
-		if (useTestInput) {
+		Scanner scanner = new Scanner(System.in);
 
-			runDefaultTest();
+		while (true) {
 
-		} else {
+			logMessage(ConsoleUtils.DEFAULT_STATIC_MESSAGE);
 
-			Scanner scanner = new Scanner(System.in);
+			String input = scanner.nextLine();
 
-			while (true) {
+			if (input.equals(ConsoleUtils.EXIT)) {
 
-				System.out.print(":");
-
-				String input = scanner.nextLine();
-
-				if (input.equals("exit")) {
-
-					break;
-				}
-
-				if (input.equals("test")) {
-
-					runDefaultTest();
-
-					break;
-				}
-
-				File file = new File(input);
-
-				if (file.exists()) {
-
-					MemoryManager memoryManager = new MemoryManager(input);
-					ChainedVM chainedVM = new ChainedVM(memoryManager);
-					chainedVM.executeProgram();
-
-					ChainedVM.logger.exportLog("log.txt");
-				}
+				break;
 			}
 
-			scanner.close();
+			switch (input) {
+
+				case ConsoleUtils.TEST -> {
+	
+					run(ConstantsTable.DEFAULT_TEST_FILE_NAME);
+				}
+	
+				default -> {
+	
+					run(input);
+				}
+
+			}
+
 		}
 
+		scanner.close();
 	}
 
-	public static void runDefaultTest() throws IOException {
+	public static void run(String fileName) throws IOException {
 
-		MemoryManager memoryManager = new MemoryManager(ConstantsTable.DEFAULT_TEST_FILE_NAME);
-		ChainedVM chainedVM = new ChainedVM(memoryManager);
-		chainedVM.executeProgram();
-
-		ChainedVM.logger.exportLog("log.txt");
-	}
-	
-	public static void runTestFile(String fileName) throws IOException {
-		
 		MemoryManager memoryManager = new MemoryManager(fileName);
 		ChainedVM chainedVM = new ChainedVM(memoryManager);
 		chainedVM.executeProgram();
 
-		ChainedVM.logger.exportLog("log.txt");		
+		ChainedVM.logger.exportLog(ConstantsTable.DEFAULT_LOG_FILE_NAME);
 	}
 	
-	public static void enableTestRun() {
+	public static void runDefaultTest() throws IOException {
+		
+		run(ConstantsTable.DEFAULT_TEST_FILE_NAME);
+	}	
+	
+	private static void logMessage(String message) {
 
-		useTestInput = true;
+		System.out.println(message);
 	}
 }
