@@ -10,7 +10,7 @@ public class ProgramLoader {
 	private FileImporter fileImporter;
 	private SlowLangClassLoader classLoader;
 	private MethodBinder methodBinder;
-	
+
 	private int[] instructions;
 
 	private ClassSpace classSpace;
@@ -18,7 +18,7 @@ public class ProgramLoader {
 
 	private static String programName;
 	private static boolean decompilerEnabled = false;
-	
+
 	public ProgramLoader() {
 
 		bytecodeVerifier = new BytecodeVerifier();
@@ -32,13 +32,57 @@ public class ProgramLoader {
 		methodBinder = new MethodBinder(classSpace, methodRegister);
 	}
 
-	public void loadProgram(String fileName) throws IOException {
+	public void loadProgram(byte[] programBytes, String programName) {
+
+		instructions = InputConverter.convertBytesToInstructions(programBytes);
+		ProgramLoader.programName = programName;
+
+		if (decompilerEnabled) {
+
+			Decompiler.decompile(instructions);
+		}
+
+		int expectedProgramId = Objects.hashCode(programName);
+		int actualProgramId = instructions[0] - Bytecodes.MAIN;
+
+		if (!bytecodeVerifier.verifyProgramId(expectedProgramId, actualProgramId)) {
+
+			throw new RuntimeException("Invalid bytecode");
+		}
+
+		classLoader.loadClasses(instructions);
+		methodBinder.bindMethods(instructions);
+	}
+
+	public void loadProgram(int[] programInstructions, String programName) {
+
+		instructions = programInstructions;
+		ProgramLoader.programName = programName;
+
+		if (decompilerEnabled) {
+
+			Decompiler.decompile(instructions);
+		}
+
+		int expectedProgramId = Objects.hashCode(programName);
+		int actualProgramId = instructions[0] - Bytecodes.MAIN;
+
+		if (!bytecodeVerifier.verifyProgramId(expectedProgramId, actualProgramId)) {
+
+			throw new RuntimeException("Invalid bytecode");
+		}
+
+		classLoader.loadClasses(instructions);
+		methodBinder.bindMethods(instructions);
+	}
+
+	public void loadProgramFromFile(String fileName) throws IOException {
 
 		instructions = loadProgramBytes(fileName);
 		programName = stripFileExtensions(fileName);
-		
+
 		if (decompilerEnabled) {
-			
+
 			Decompiler.decompile(instructions);
 		}
 
@@ -83,9 +127,9 @@ public class ProgramLoader {
 
 		return methodRegister;
 	}
-	
+
 	public static void enableDecompiler() {
-		
+
 		decompilerEnabled = true;
 	}
 }
