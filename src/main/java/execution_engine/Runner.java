@@ -9,7 +9,7 @@ public class Runner {
 
 		Scanner scanner = new Scanner(System.in);
 
-		while (true) {
+		outer : while (true) {
 
 			logMessage(ConsoleUtils.DEFAULT_STATIC_MESSAGE);
 
@@ -25,6 +25,7 @@ public class Runner {
 				case ConsoleUtils.TEST -> {
 	
 					run(ConstantsTable.DEFAULT_TEST_FILE_NAME);
+					break outer;
 				}
 	
 				default -> {
@@ -55,6 +56,6 @@ public class Runner {
 	
 	private static void logMessage(String message) {
 
-		System.out.println(message);
+		System.out.print(message);
 	}
 }
