@@ -20,7 +20,21 @@ public class MemoryManager implements InstructionsLoader, ObjectCache {
 		heap = new Heap(new HashMap<Integer, int[]>());
 
 		programLoader = new ProgramLoader();
-		programLoader.loadProgram(fileName);
+		programLoader.loadProgramFromFile(fileName);
+
+		instructions = programLoader.getInstructions();
+		classSpace = programLoader.getClassSpace();
+		methodRegister = programLoader.getMethodRegister();
+
+		heap = new Heap(new HashMap<Integer, int[]>());
+	}
+
+	public MemoryManager(byte[] programBytes, String programName) {
+
+		heap = new Heap(new HashMap<Integer, int[]>());
+
+		programLoader = new ProgramLoader();
+		programLoader.loadProgram(programBytes, programName);
 
 		instructions = programLoader.getInstructions();
 		classSpace = programLoader.getClassSpace();
